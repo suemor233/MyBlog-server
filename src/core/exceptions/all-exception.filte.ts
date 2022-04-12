@@ -12,6 +12,8 @@ export class AllExceptionFilter<T> implements ExceptionFilter {
         : HttpStatus.INTERNAL_SERVER_ERROR;
 
     // @ts-ignore
+    console.log(exception)
+    // @ts-ignore
     const message = exception.response.message
       // @ts-ignore
       ? exception.response.message

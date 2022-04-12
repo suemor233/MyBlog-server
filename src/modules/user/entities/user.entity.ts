@@ -1,6 +1,5 @@
 //    posts/posts.entity.ts
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import {SocialEntity} from "./social.entity";
 
 
 @Entity("user")
@@ -20,9 +19,14 @@ export class UserEntity {
   @Column()
   avatar: string;
 
-  @OneToOne(type => SocialEntity)
-  @JoinColumn()
-  social_: string;
+  @Column()
+  github: string;
+
+  @Column()
+  email: string;
+
+  @Column()
+  twitter: string;
 
   @Column()
   salt: string;

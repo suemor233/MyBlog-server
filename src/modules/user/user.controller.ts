@@ -12,8 +12,7 @@ export class UserController {
   @Post('register')
   @ApiOperation({ summary: '注册' })
   async register(@Body() userDto: UserDto) {
-    // @ts-ignore
-    return this.userService.register(UserDto)
+    return this.userService.register(userDto)
   }
 
 

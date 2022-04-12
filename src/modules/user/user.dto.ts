@@ -21,27 +21,25 @@ class UserOptionDto {
   @ApiProperty({ required: false, example: 'example@example.com' })
   @IsEmail()
   @IsOptional()
-  readonly mail?: string
-
-  @ApiProperty({ required: false, example: 'http://example.com' })
-  @IsUrl({ require_protocol: true }, { message: '请更正为正确的网址' })
-  @IsOptional()
-  readonly url?: string
-
-  @ApiProperty({ required: false })
-  @IsString()
-  @IsOptional()
-  name?: string
+  readonly email?: string
 
   @ApiProperty({ required: false ,example: 'http://example.com' })
   @IsAllowedUrl()
   @IsOptional()
   readonly avatar?: string
 
+  @ApiProperty({ required: false ,example: 'http://example.com' })
+  @IsAllowedUrl()
   @IsOptional()
-  @IsObject()
-  @ApiProperty({ description: '各种社交 id 记录' })
-  readonly socialIds?: Record<string, any>
+  readonly github?: string
+
+
+  @ApiProperty({ required: false ,example: 'http://example.com' })
+  @IsAllowedUrl()
+  @IsOptional()
+  readonly twitter?: string
+
+  salt?: string
 }
 
 export class UserDto extends UserOptionDto {
@@ -53,7 +51,7 @@ export class UserDto extends UserOptionDto {
   @IsString()
   @ApiProperty()
   @IsNotEmpty({ message: '密码？' })
-  readonly password: string
+  password: string
 }
 
 export class LoginDto {
