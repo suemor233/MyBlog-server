@@ -1,7 +1,7 @@
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
-import { Logger } from "@nestjs/common";
+import { Logger, ValidationPipe } from "@nestjs/common";
 import { AllExceptionFilter } from "./core/exceptions/all-exception.filte";
 import { TransformInterceptor } from "./core/filters/transform.interceptor";
 
@@ -9,12 +9,14 @@ export async function bootstrap() {
   const logger = new Logger()
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api');
+  app.useGlobalPipes(new ValidationPipe())
   app.useGlobalInterceptors(new TransformInterceptor());
   app.useGlobalFilters(new AllExceptionFilter());
   const config = new DocumentBuilder()
     .setTitle('suemor博客接口文档')
     .setDescription('欢迎来到suemor博客接口文档')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api-docs', app, document);

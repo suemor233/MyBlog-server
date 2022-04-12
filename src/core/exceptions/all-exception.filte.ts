@@ -12,9 +12,9 @@ export class AllExceptionFilter<T> implements ExceptionFilter {
         : HttpStatus.INTERNAL_SERVER_ERROR;
 
     // @ts-ignore
-    const message = exception.message
+    const message = exception.response.message
       // @ts-ignore
-      ? exception.message
+      ? exception.response.message
       : '服务器异常';
     const errorResponse = {
       code: status,
