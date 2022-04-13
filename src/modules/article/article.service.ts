@@ -52,17 +52,21 @@ export class ArticleService {
     }
 
     async updateArticleById(id: string, articleInfoDto: ArticleInfoDto) {
-        // const article = await this.findArticleById(id)
-        // const articles = await this.categoriesEntityRepository.find()
-        // articles.includes()
-        //
-        // article.title = articleInfoDto.title
-        // article.content = articleInfoDto.content
-        // article.cover = articleInfoDto.cover
-        // article.tags = articleInfoDto.tags.toString()
-        // await this.articleEntityRepository.save(article)
+        const article = await this.findArticleById(id)
+        const categories = await this.categoriesEntityRepository.find()
 
-        // return this.articleEntityRepository.update({where:''})
+        categories.map(item =>{
+            if (item.name === articleInfoDto.category){
+                article.category = item
+            }
+        })
+
+        article.title = articleInfoDto.title
+        article.content = articleInfoDto.content
+        article.cover = articleInfoDto.cover
+        article.tags = articleInfoDto.tags.toString()
+
+        await this.articleEntityRepository.save(article)
     }
 
 }
