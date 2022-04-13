@@ -4,6 +4,7 @@ specifiers:
   '@nestjs/cli': ^8.0.0
   '@nestjs/common': ^8.0.0
   '@nestjs/core': ^8.0.0
+  '@nestjs/passport': ^8.2.1
   '@nestjs/platform-express': ^8.0.0
   '@nestjs/schematics': ^8.0.0
   '@nestjs/swagger': ^5.2.1
@@ -43,6 +44,7 @@ specifiers:
 dependencies:
   '@nestjs/common': 8.4.4_5199533202e21c7185c9d97f881e2827
   '@nestjs/core': 8.4.4_b63c269346792a9d57cfab86d23050d2
+  '@nestjs/passport': 8.2.1_@nestjs+common@8.4.4
   '@nestjs/platform-express': 8.4.4_a78378ec5f3cecc3c353ed91b578f3e6
   '@nestjs/swagger': 5.2.1_0d02518704b9480274bb3a5bf7280c33
   '@nestjs/typeorm': 8.0.3_ea7e02d3d3a40be7f45db2b10cb2e70e
@@ -862,6 +864,15 @@ packages:
       class-transformer: 0.5.1
       class-validator: 0.13.2
       reflect-metadata: 0.1.13
+    dev: false
+
+  /@nestjs/passport/8.2.1_@nestjs+common@8.4.4:
+    resolution: {integrity: sha512-HXEKMLX1x865+lsJB4srwKHBciDNAhWY1Ha+xbxYRbk7J5leGDoHJAmeqe+Wb3NDn5nkboggLV87t0q2mbYc8w==}
+    peerDependencies:
+      '@nestjs/common': ^6.0.0 || ^7.0.0 || ^8.0.0
+      passport: ^0.4.0 || ^0.5.0
+    dependencies:
+      '@nestjs/common': 8.4.4_5199533202e21c7185c9d97f881e2827
     dev: false
 
   /@nestjs/platform-express/8.4.4_a78378ec5f3cecc3c353ed91b578f3e6:

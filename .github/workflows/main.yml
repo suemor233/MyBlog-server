@@ -23,5 +23,5 @@ jobs:
       - name: Build
         run: |
           pnpm install
-          pnpm run build  # 执行打包
+          pnpm build  # 执行打包
 
