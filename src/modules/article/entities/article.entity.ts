@@ -1,11 +1,11 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import { CategoriesEntity } from "./category.entity";
+import {Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn} from "typeorm";
+import { CategoriesEntity } from "~/modules/category/entities/category.entity";
 
 
 @Entity("article")
 export class ArticleEntity {
   @PrimaryGeneratedColumn()
-  id:number; // 标记为主列，值自动生成
+  id:string; // 标记为主列，值自动生成
 
   @Column({ length: 30})
   title:string
@@ -19,9 +19,8 @@ export class ArticleEntity {
   @Column({ length: 100})
   tags:string
 
-  @OneToOne(type => CategoriesEntity)
-  @JoinColumn()
-  categories_: object;
+  @ManyToOne(type => CategoriesEntity, category => category.articles)
+  category: CategoriesEntity;
 
   @Column({type: 'timestamp', default: () => "CURRENT_TIMESTAMP"})
   create_at: Date

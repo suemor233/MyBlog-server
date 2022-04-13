@@ -6,7 +6,7 @@ import {Exclude} from "class-transformer";
 @Entity("user")
 export class UserEntity {
   @PrimaryGeneratedColumn()
-  id:number; // 标记为主列，值自动生成
+  id:string; // 标记为主列，值自动生成
 
   @Column({ length:20 })
   username: string;

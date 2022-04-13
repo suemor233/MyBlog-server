@@ -1,18 +1,10 @@
-import { Transform } from 'class-transformer'
-import {IsEnum, IsNotEmpty, IsOptional, IsString, ValidateIf} from 'class-validator'
+
+import {IsEnum, IsNotEmpty, IsOptional, IsString} from 'class-validator'
 import {ApiProperty} from "@nestjs/swagger";
 import {IsAllowedUrl} from "~/utils/validator/isAllowedUrl";
 
 
-
-export class CategoryDto{
-    @ApiProperty({ required: false ,example: '类别' })
-    @IsOptional()
-    readonly name?: string
-}
-
-
-export class ArticleInfoDto extends CategoryDto{
+export class ArticleInfoDto{
 
     @IsOptional()
     @IsString()
