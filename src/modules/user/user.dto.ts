@@ -39,7 +39,7 @@ class UserOptionDto {
   @IsOptional()
   readonly twitter?: string
 
-  salt?: string
+  readonly salt?: string
 }
 
 export class UserDto extends UserOptionDto {
@@ -57,11 +57,11 @@ export class UserDto extends UserOptionDto {
 export class LoginDto {
   @ApiProperty({ required: true })
   @IsString({ message: '用户名？' })
-  username: string
+  readonly username: string
 
   @ApiProperty({ required: true })
   @IsString({ message: '密码？' })
-  password: string
+  readonly password: string
 }
 
 export class UserPatchDto extends UserOptionDto {
