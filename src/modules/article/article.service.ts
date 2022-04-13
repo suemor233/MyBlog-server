@@ -1,26 +1,37 @@
-import { Injectable } from '@nestjs/common';
-import { CreateArticleDto } from './dto/create-article.dto';
-import { UpdateArticleDto } from './dto/update-article.dto';
+import {Injectable} from '@nestjs/common';
+
+import {InjectRepository} from "@nestjs/typeorm";
+import {UserEntity} from "~/modules/user/entities/user.entity";
+import {Repository} from "typeorm";
+import {ArticleEntity} from "~/modules/article/entities/article.entity";
+import {CategoriesEntity} from "~/modules/article/entities/category.entity";
+import {ArticleInfoDto} from "~/modules/article/article.dto";
 
 @Injectable()
 export class ArticleService {
-  create(createArticleDto: CreateArticleDto) {
-    return 'This action adds a new article';
-  }
+    constructor(
+        @InjectRepository(ArticleEntity)
+        private readonly articleEntityRepository: Repository<ArticleEntity>,
+        @InjectRepository(CategoriesEntity)
+        private readonly categoriesEntityRepository: Repository<CategoriesEntity>,
+    ) {
+    }
 
-  findAll() {
-    return `This action returns all article`;
-  }
+    async create(createArticleDto: ArticleInfoDto) {
 
-  findOne(id: number) {
-    return `This action returns a #${id} article`;
-  }
+        if (createArticleDto.category) {
+            const categoriesEntity = new CategoriesEntity()
+            categoriesEntity.name = createArticleDto.category
+            await this.categoriesEntityRepository.save(categoriesEntity)
 
-  update(id: number, updateArticleDto: UpdateArticleDto) {
-    return `This action updates a #${id} article`;
-  }
+            const articleEntity = new ArticleEntity()
+            Object.assign(articleEntity,createArticleDto)
+            articleEntity.categories_ = categoriesEntity
+            articleEntity.tags = articleEntity.tags.toString()
+            return await this.articleEntityRepository.save(articleEntity)
+        }else {
+            return await this.articleEntityRepository.save(createArticleDto)
+        }
+    }
 
-  remove(id: number) {
-    return `This action removes a #${id} article`;
-  }
 }

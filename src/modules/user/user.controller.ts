@@ -1,11 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  UseInterceptors,
+  ClassSerializerInterceptor, UseGuards
+} from '@nestjs/common';
 import { UserService } from './user.service';
-import { UserDto } from "~/modules/user/user.dto";
-import { ApiOperation, ApiTags } from "@nestjs/swagger";
-
+import {LoginDto, UserDto, UserPatchDto} from "~/modules/user/user.dto";
+import {ApiBearerAuth, ApiOperation, ApiTags} from "@nestjs/swagger";
+import { AuthGuard } from "@nestjs/passport";
 
 @ApiTags("用户")
-@Controller(['master', 'user'])
+@Controller(['user'])
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -15,6 +22,25 @@ export class UserController {
     return this.userService.register(userDto)
   }
 
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Post('login')
+  @ApiOperation({ summary: '登录' })
+  async login(@Body() userDto: LoginDto) {
+    return this.userService.login(userDto)
+  }
 
+  @ApiOperation({ summary: '判断用户是否有token' })
+  @UseGuards(AuthGuard('jwt'))
+  @ApiBearerAuth()
+  @Get('check_logged')
+  checkLogined() {
+    return;
+  }
 
+  @Get()
+  @ApiOperation({ summary: '获取主人信息' })
+  @UseInterceptors(ClassSerializerInterceptor)
+  async getMasterInfo() {
+    return await this.userService.getUserInfo()
+  }
 }

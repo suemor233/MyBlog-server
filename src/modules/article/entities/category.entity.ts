@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity("categories")
@@ -6,7 +6,8 @@ export class CategoriesEntity {
   @PrimaryGeneratedColumn()
   id:number; // 标记为主列，值自动生成
 
-  @Column()
+
+  @Column({ length: 100})
   name:string
 
   @Column({type: 'timestamp', default: () => "CURRENT_TIMESTAMP"})

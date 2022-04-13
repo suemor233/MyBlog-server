@@ -1,5 +1,6 @@
 //    posts/posts.entity.ts
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {Exclude} from "class-transformer";
 
 
 @Entity("user")
@@ -11,24 +12,26 @@ export class UserEntity {
   username: string;
 
   @Column({ length: 30})
+  @Exclude()
   password: string;
 
   @Column("text")
   introduce:string;
 
-  @Column()
+  @Column({ length: 100})
   avatar: string;
 
-  @Column()
+  @Column({ length: 100})
   github: string;
 
-  @Column()
+  @Column({ length: 100})
   email: string;
 
-  @Column()
+  @Column({ length: 100})
   twitter: string;
 
-  @Column()
+  @Column({ length: 100})
+  @Exclude()
   salt: string;
 
   @Column({type: 'timestamp', default: () => "CURRENT_TIMESTAMP"})

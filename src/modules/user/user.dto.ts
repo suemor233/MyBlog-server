@@ -10,6 +10,7 @@ import {
 import { ApiProperty } from '@nestjs/swagger'
 
 import { IsAllowedUrl } from '~/utils/validator/isAllowedUrl'
+import {Exclude} from "class-transformer";
 
 class UserOptionDto {
   @IsOptional()
@@ -57,10 +58,12 @@ export class UserDto extends UserOptionDto {
 export class LoginDto {
   @ApiProperty({ required: true })
   @IsString({ message: '用户名？' })
+  @IsNotEmpty({ message: '用户名？' })
   readonly username: string
 
   @ApiProperty({ required: true })
   @IsString({ message: '密码？' })
+  @IsNotEmpty({ message: '密码？' })
   readonly password: string
 }
 

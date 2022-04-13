@@ -10,15 +10,18 @@ export class ArticleEntity {
   @Column({ length: 30})
   title:string
 
-  @Column()
+  @Column("text")
+  content:string
+
+  @Column({ length: 100})
   cover:string
 
-  @Column()
+  @Column({ length: 100})
   tags:string
 
   @OneToOne(type => CategoriesEntity)
   @JoinColumn()
-  categories_: string;
+  categories_: object;
 
   @Column({type: 'timestamp', default: () => "CURRENT_TIMESTAMP"})
   create_at: Date
