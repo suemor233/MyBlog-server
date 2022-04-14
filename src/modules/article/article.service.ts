@@ -69,4 +69,21 @@ export class ArticleService {
         await this.articleEntityRepository.save(article)
     }
 
+    async findArticleByPage(pageNum: number, pageSize: number) {
+        if (pageNum && pageSize){
+            let qb = this.articleEntityRepository.createQueryBuilder()
+            qb = qb.skip(pageSize * (pageNum - 1)).take(pageSize)
+            const article = await qb.getMany()
+
+            return {
+                article,
+                'total':article.length,
+                'pageNum':pageNum,
+                'pageSize':pageSize,
+            }
+        }else {
+            return await this.articleEntityRepository.find()
+        }
+
+    }
 }

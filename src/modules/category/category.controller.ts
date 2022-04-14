@@ -15,8 +15,8 @@ export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
   @Post()
-  // @UseGuards(AuthGuard('jwt'))
-  // @ApiBearerAuth()
+  @UseGuards(AuthGuard('jwt'))
+  @ApiBearerAuth()
   @ApiOperation({ summary: '创建文章分类' })
   create(@Body() categoryDto: CategoryDto) {
     return this.categoryService.create(categoryDto);
@@ -35,12 +35,16 @@ export class CategoryController {
 
   @Put(':id')
   @ApiOperation({ summary: '修改文章分类' })
+  @UseGuards(AuthGuard('jwt'))
+  @ApiBearerAuth()
   updateCategory(@Param('id') id:string, @Body() categoryDto: CategoryDto) {
     return  this.categoryService.updateCategoryById(id, categoryDto)
   }
 
   @Delete(':id')
   @ApiOperation({ summary: '根据id删除分类' })
+  @UseGuards(AuthGuard('jwt'))
+  @ApiBearerAuth()
   deleteCategory(@Param('id') id: string) {
     return this.categoryService.deleteCategoryById(id);
   }
