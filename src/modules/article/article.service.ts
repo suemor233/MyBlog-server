@@ -5,7 +5,6 @@ import {Repository} from "typeorm";
 import {ArticleEntity} from "~/modules/article/entities/article.entity";
 import {ArticleInfoDto} from "~/modules/article/article.dto";
 import {CategoriesEntity} from "~/modules/category/entities/category.entity";
-import {CategoryService} from "~/modules/category/category.service";
 
 @Injectable()
 export class ArticleService {
@@ -14,7 +13,6 @@ export class ArticleService {
         private readonly articleEntityRepository: Repository<ArticleEntity>,
         @InjectRepository(CategoriesEntity)
         private readonly categoriesEntityRepository: Repository<CategoriesEntity>,
-        private readonly categoryService: CategoryService
     ) {
     }
 

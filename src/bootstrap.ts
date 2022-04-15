@@ -12,6 +12,7 @@ export async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe())
   app.useGlobalInterceptors(new TransformInterceptor());
   app.useGlobalFilters(new AllExceptionFilter());
+  app.enableCors();
   const config = new DocumentBuilder()
     .setTitle('suemor博客接口文档')
     .setDescription('欢迎来到suemor博客接口文档')

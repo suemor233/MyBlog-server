@@ -6,7 +6,7 @@ import {Exclude} from "class-transformer";
 @Entity("user")
 export class UserEntity {
   @PrimaryGeneratedColumn()
-  id:string; // 标记为主列，值自动生成
+  id:string;
 
   @Column({ length:20 })
   username: string;
@@ -15,19 +15,19 @@ export class UserEntity {
   @Exclude()
   password: string;
 
-  @Column("text")
+  @Column("text",{nullable:true})
   introduce:string;
 
-  @Column({ length: 100})
+  @Column({ length: 100,default:''})
   avatar: string;
 
-  @Column({ length: 100})
+  @Column({ length: 100,default:''})
   github: string;
 
-  @Column({ length: 100})
+  @Column({ length: 100,default:''})
   email: string;
 
-  @Column({ length: 100})
+  @Column({ length: 100,default:''})
   twitter: string;
 
   @Column({ length: 100})
