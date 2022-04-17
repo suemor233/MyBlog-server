@@ -9,8 +9,8 @@ export class CategoriesEntity {
     @Column({ length: 100})
     name:string
 
-    @Column({type: 'timestamp', default: () => "CURRENT_TIMESTAMP"})
-    create_at: Date
+    @Column({type: 'timestamp', default: () => "CURRENT_TIMESTAMP",name:'create_at'})
+    createAt: Date
 
     @OneToMany(type => ArticleEntity, article => article.category) // note: we will create author property in the Photo class below
     articles: ArticleEntity[];

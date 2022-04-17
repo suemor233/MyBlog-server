@@ -3,6 +3,7 @@ import { ArticleService } from './article.service';
 import {ArticleInfoDto} from "~/modules/article/article.dto";
 import {ApiBearerAuth, ApiTags} from "@nestjs/swagger";
 import { AuthGuard } from "@nestjs/passport";
+import {LoginDto} from "~/modules/user/user.dto";
 
 @Controller('article')
 @ApiTags('文章')
@@ -31,6 +32,13 @@ export class ArticleController {
   @ApiBearerAuth()
   deletePost(@Param('id') id: string) {
     return this.articleService.deleteArticleById(id);
+  }
+
+  @Post('delete')
+  @UseGuards(AuthGuard('jwt'))
+  @ApiBearerAuth()
+  async deletePosts(@Body()ids:string[]) {
+    return this.articleService.deleteArticles(ids)
   }
 
 

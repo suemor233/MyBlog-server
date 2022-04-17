@@ -1,4 +1,4 @@
-import {ConflictException, Injectable} from '@nestjs/common';
+import {ConflictException, Injectable, NotFoundException} from '@nestjs/common';
 
 import {InjectRepository} from "@nestjs/typeorm";
 import {Repository} from "typeorm";
@@ -17,6 +17,7 @@ export class ArticleService {
     }
 
     async create(createArticleDto: ArticleInfoDto) {
+        console.log(createArticleDto)
         let category = await this.categoriesEntityRepository.findOne({where: {name: createArticleDto.category}})
         if (createArticleDto.category === '默认分类' && !category) {
             const categoriesEntity = new CategoriesEntity()
@@ -50,29 +51,40 @@ export class ArticleService {
     }
 
     async updateArticleById(id: string, articleInfoDto: ArticleInfoDto) {
+        console.log(id,articleInfoDto)
         const article = await this.findArticleById(id)
         const categories = await this.categoriesEntityRepository.find()
 
-        categories.map(item =>{
-            if (item.name === articleInfoDto.category){
-                article.category = item
+        if (articleInfoDto.category){
+            let categoryFlag = false
+
+            categories.map(item =>{
+                if (item.name === articleInfoDto.category){
+                    article.category = item
+                    categoryFlag = true
+                    return
+                }
+            })
+            if (!categoryFlag){
+                throw new NotFoundException('分类不存在')
             }
-        })
+
+        }
 
         article.title = articleInfoDto.title
         article.content = articleInfoDto.content
         article.cover = articleInfoDto.cover
         article.tags = articleInfoDto.tags.toString()
+        article.state = articleInfoDto.state
 
-        await this.articleEntityRepository.save(article)
+       return  await this.articleEntityRepository.save(article)
     }
 
     async findArticleByPage(pageNum: number, pageSize: number) {
         if (pageNum && pageSize){
-            let qb = this.articleEntityRepository.createQueryBuilder()
+            let qb = this.articleEntityRepository.createQueryBuilder('article')
             qb = qb.skip(pageSize * (pageNum - 1)).take(pageSize)
-            const article = await qb.getMany()
-
+            const article = await qb.leftJoinAndSelect('article.category','category').getMany()
             return {
                 article,
                 'total':article.length,
@@ -80,8 +92,14 @@ export class ArticleService {
                 'pageSize':pageSize,
             }
         }else {
-            return await this.articleEntityRepository.find()
+            return await this.articleEntityRepository.find({relations: ["category"] })
         }
 
+    }
+
+  async  deleteArticles(ids: string[]) {
+      await ids.forEach(id =>{
+             this.articleEntityRepository.delete({id})
+        })
     }
 }

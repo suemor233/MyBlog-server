@@ -1,5 +1,5 @@
 
-import {IsEnum, IsNotEmpty, IsOptional, IsString} from 'class-validator'
+import {IsBoolean, IsEnum, IsNotEmpty, IsOptional, IsString} from 'class-validator'
 import {ApiProperty} from "@nestjs/swagger";
 import {IsAllowedUrl} from "~/utils/validator/isAllowedUrl";
 
@@ -17,6 +17,12 @@ export class ArticleInfoDto{
     @IsNotEmpty()
     @ApiProperty({ example: '文章内容' })
     readonly content?: string
+
+    @IsOptional()
+    @IsNotEmpty()
+    @IsBoolean()
+    @ApiProperty({ example: false })
+    readonly state?: boolean
 
 
     @ApiProperty({ required: false ,example: 'http://example.com' })
