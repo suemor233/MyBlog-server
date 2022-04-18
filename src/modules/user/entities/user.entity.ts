@@ -1,5 +1,5 @@
 //    posts/posts.entity.ts
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
 import {Exclude} from "class-transformer";
 
 
@@ -34,9 +34,9 @@ export class UserEntity {
   @Exclude()
   salt: string;
 
-  @Column({type: 'timestamp', default: () => "CURRENT_TIMESTAMP"})
-  create_at: Date
+  @CreateDateColumn({type: 'timestamp',name:'create_at'})
+  createAt: Date
 
-  @Column({type: 'timestamp', default: () => "CURRENT_TIMESTAMP"})
-  update_at: Date
+  @UpdateDateColumn({type: 'timestamp',name:'update_at'})
+  updateAt: Date
 }

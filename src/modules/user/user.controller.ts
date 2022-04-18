@@ -23,11 +23,11 @@ export class UserController {
     return this.userService.register(userDto)
   }
 
-  @UseInterceptors(ClassSerializerInterceptor)
   @Post('login')
   @ApiOperation({ summary: '登录' })
+  @UseInterceptors(ClassSerializerInterceptor)
   async login(@Body() userDto: LoginDto) {
-    return this.userService.login(userDto)
+    return await this.userService.login(userDto)
   }
 
   @ApiOperation({ summary: '判断用户是否有token' })

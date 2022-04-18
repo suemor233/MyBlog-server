@@ -1,4 +1,13 @@
-import {Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn} from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
+} from "typeorm";
 import { CategoriesEntity } from "~/modules/category/entities/category.entity";
 
 
@@ -25,9 +34,9 @@ export class ArticleEntity {
   @Column({default:false})
   state: boolean;
 
-  @Column({type: 'timestamp', default: () => "CURRENT_TIMESTAMP",name:'create_at'})
+  @CreateDateColumn({type: 'timestamp',name:'create_at'})
   createAt: Date
 
-  @Column({type: 'timestamp', default: () => "CURRENT_TIMESTAMP",name:'update_at'})
+  @UpdateDateColumn({type: 'timestamp',name:'update_at'})
   updateAt: Date
 }

@@ -1,7 +1,7 @@
 import {Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Put, Query} from '@nestjs/common';
 import { ArticleService } from './article.service';
 import {ArticleInfoDto} from "~/modules/article/article.dto";
-import {ApiBearerAuth, ApiTags} from "@nestjs/swagger";
+import {ApiBearerAuth, ApiPropertyOptional, ApiTags} from "@nestjs/swagger";
 import { AuthGuard } from "@nestjs/passport";
 import {LoginDto} from "~/modules/user/user.dto";
 
@@ -38,6 +38,7 @@ export class ArticleController {
   @UseGuards(AuthGuard('jwt'))
   @ApiBearerAuth()
   async deletePosts(@Body()ids:string[]) {
+    console.log('start',ids)
     return this.articleService.deleteArticles(ids)
   }
 
