@@ -46,6 +46,7 @@ export class CategoryController {
   @UseGuards(AuthGuard('jwt'))
   @ApiBearerAuth()
   deleteCategory(@Param('id') id: string) {
+    console.log(id)
     return this.categoryService.deleteCategoryById(id);
   }
 }

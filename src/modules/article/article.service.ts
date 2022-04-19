@@ -17,14 +17,13 @@ export class ArticleService {
     }
 
     async create(createArticleDto: ArticleInfoDto) {
-        console.log(createArticleDto)
         let category = await this.categoriesEntityRepository.findOne({where: {name: createArticleDto.category}})
         if (createArticleDto.category === '默认分类' && !category) {
             const categoriesEntity = new CategoriesEntity()
             categoriesEntity.name = '默认分类'
-            await this.categoriesEntityRepository.save(categoriesEntity)
-            category = await this.categoriesEntityRepository.findOne({where: {name: createArticleDto.category}})
+            category = await this.categoriesEntityRepository.save(categoriesEntity)
         }
+
         if (!category && createArticleDto.category !== '默认分类') {
             throw new ConflictException('分类不存在')
         }
