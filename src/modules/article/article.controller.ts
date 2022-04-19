@@ -1,9 +1,22 @@
-import {Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Put, Query} from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  Put,
+  Query,
+  UseInterceptors, UploadedFile, InternalServerErrorException
+} from '@nestjs/common';
 import { ArticleService } from './article.service';
 import {ArticleInfoDto} from "~/modules/article/article.dto";
-import {ApiBearerAuth, ApiPropertyOptional, ApiTags} from "@nestjs/swagger";
+import {ApiBearerAuth, ApiConsumes, ApiOperation, ApiPropertyOptional, ApiTags} from "@nestjs/swagger";
 import { AuthGuard } from "@nestjs/passport";
 import {LoginDto} from "~/modules/user/user.dto";
+import {FileInterceptor} from "@nestjs/platform-express";
 
 @Controller('article')
 @ApiTags('文章')
@@ -49,5 +62,7 @@ export class ArticleController {
   async update(@Param('id') id:string, @Body() articleInfoDto: ArticleInfoDto) {
     return this.articleService.updateArticleById(id,articleInfoDto)
   }
+
+
 
 }
