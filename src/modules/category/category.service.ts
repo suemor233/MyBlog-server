@@ -35,16 +35,24 @@ export class CategoryService {
     async deleteCategoryById(id: string) {
         const category = await this.categoriesEntityRepository.findOne({where: {id}})
         const article = await this.articleEntityRepository.find({where: {category}})
-        if (article){
+
+        if (article && article.length > 0) {
             throw new ConflictException('分类下有文章，不能删除')
         }
+        if (category.name === '默认分类'){
+            throw new ConflictException('默认分类不能删除')
 
-        return this.categoriesEntityRepository.delete({id})
+        }
+
+
+            return this.categoriesEntityRepository.delete({id})
     }
 
     async updateCategoryById(id: string, categoryDto: CategoryDto) {
         const category = await this.categoriesEntityRepository.findOne({where: {id}})
-        console.log(category)
+        if (categoryDto.name === '默认分类'){
+            throw new ConflictException('默认分类不能修改')
+        }
         if (!category) {
             throw new ConflictException('分类不存在')
         }
@@ -62,3 +70,5 @@ export class CategoryService {
         return category
     }
 }
+
+
